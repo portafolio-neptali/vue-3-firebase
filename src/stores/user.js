@@ -114,6 +114,9 @@ export const useUserStore = defineStore('user', () => {
             userData.value = {
               email: user.email,
               uid: user.uid,
+              photo:
+                user.photoURL ||
+                'https://blog.jijitechnologies.com/assets/img/user.jpg',
             };
           } else {
             userData.value = null;
