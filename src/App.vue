@@ -6,29 +6,37 @@ const userStore = useUserStore();
 </script>
 
 <template>
-  <header>
-    <div class="wrapper">
-      <nav class="d-flex justify-space-between">
-        <div>
-          <RouterLink v-if="userStore.userData" class="link" to="/"
-            >Home</RouterLink
-          >
+  <header v-if="!userStore.loadingSession">
+    <nav class="d-flex justify-space-between">
+      <div>
+        <RouterLink v-if="userStore.userData" class="link" to="/"
+          >Home</RouterLink
+        >
 
-          <RouterLink v-if="!userStore.userData" class="link" to="/login"
-            >Login</RouterLink
-          >
+        <RouterLink v-if="!userStore.userData" class="link" to="/login"
+          >Login</RouterLink
+        >
 
-          <RouterLink v-if="!userStore.userData" class="link" to="/register"
-            >Registro</RouterLink
-          >
-        </div>
+        <RouterLink v-if="!userStore.userData" class="link" to="/register"
+          >Registro</RouterLink
+        >
+      </div>
 
-        <button @click="userStore.logOut">Logout</button>
-      </nav>
-    </div>
+      <button @click="userStore.logOut">Logout</button>
+    </nav>
   </header>
-  <v-container>
+  <v-container v-if="!userStore.loadingSession">
     <RouterView />
+  </v-container>
+  <v-container v-else>
+    <div class="d-flex justify-center align-center mt-8">
+      <h1 class="text-center">Cargando ...</h1>
+      <v-progress-circular
+        class="ml-4"
+        indeterminate
+        color="primary"
+      ></v-progress-circular>
+    </div>
   </v-container>
 </template>
 <style>
