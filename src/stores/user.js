@@ -19,6 +19,7 @@ export const useUserStore = defineStore('user', () => {
   // State
   const userData = ref(null);
   const loading = ref(false);
+  const loadingSession = ref(false);
   const router = useRouter();
 
   //Actions
@@ -133,5 +134,6 @@ export const useUserStore = defineStore('user', () => {
     loading,
     registroGoogle,
     currentUser,
+    loadingSession,
   };
 });
