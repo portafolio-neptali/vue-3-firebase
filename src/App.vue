@@ -22,7 +22,9 @@ const userStore = useUserStore();
         >
       </div>
 
-      <button @click="userStore.logOut">Logout</button>
+      <button v-if="userStore.userData" @click="userStore.logOut">
+        Logout
+      </button>
     </nav>
   </header>
   <v-container v-if="!userStore.loadingSession">
