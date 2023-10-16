@@ -6,9 +6,11 @@ import { db, auth } from '../firebaseConfig';
 export const useDatabaseStore = defineStore('database', () => {
   // state
   const documents = ref([]);
+  const loadingDoc = ref([false]);
 
   //Actions
   const getUrls = async () => {
+    loadingDoc.value = true;
     try {
       const q = query(
         collection(db, 'urls'),
@@ -21,7 +23,12 @@ export const useDatabaseStore = defineStore('database', () => {
       });
     } catch (error) {
       console.log(error);
+    } finally {
+      loadingDoc.value = false;
     }
   };
-  return { getUrls, documents };
+  function $reset() {
+    documents.value = [];
+  }
+  return { getUrls, documents, loadingDoc, $reset };
 });

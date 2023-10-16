@@ -16,7 +16,18 @@ useDatabase.getUrls();
       <v-avatar :image="userData?.photo"></v-avatar>
     </div>
     <h5>Bienvenido {{ userData?.email }}</h5>
-    <div class="mt-5">
+    <div
+      class="d-flex justify-center align-center mt-8"
+      v-if="useDatabase.loadingDoc"
+    >
+      <h1 class="text-center">Cargando ...</h1>
+      <v-progress-circular
+        class="ml-4"
+        indeterminate
+        color="primary"
+      ></v-progress-circular>
+    </div>
+    <div class="mt-5" v-else>
       <h3>Mis URLs</h3>
       <v-table class="elevation-2">
         <thead>

@@ -1,5 +1,5 @@
 import { ref } from 'vue';
-import { defineStore } from 'pinia';
+import { defineStore, storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
 import {
   createUserWithEmailAndPassword,
@@ -9,6 +9,7 @@ import {
   signInWithPopup,
   onAuthStateChanged,
 } from 'firebase/auth';
+import { useDatabaseStore } from './database';
 import { auth } from '../firebaseConfig';
 import Swal from 'sweetalert2';
 
@@ -93,10 +94,12 @@ export const useUserStore = defineStore('user', () => {
   };
 
   const logOut = async () => {
+    const useDatabase = useDatabaseStore();
     try {
       await signOut(auth);
       userData.value = null;
       router.push({ name: 'login' });
+      useDatabase.$reset();
     } catch (error) {
       Swal.fire({
         icon: 'error',
